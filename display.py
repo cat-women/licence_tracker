@@ -138,8 +138,11 @@ def Display(key):
         e9 = Entry(root,font=("Arial"))
         e9.grid(row=9, column=1, pady = 5, padx = 10)
 
-        btn = Button(root,text = "Close",command=lambda: root.destroy()).grid(row=10, column=0,columnspan=2, pady = 5, padx = 10)
-        upload = Button(root,text = "Pay", command=upload_pic).grid(row=10, column=1,columnspan=2, pady = 5, padx = 10)
+        e10 = Text(root,font=("Arial",14),height=2,width=30)
+        e10.grid(row=10, column=0, pady = 5, padx = 10)
+
+        btn = Button(root,text = "Close",command=lambda: root.destroy()).grid(row=12, column=0,columnspan=2, pady = 5, padx = 10)
+        upload = Button(root,text = "Pay", command=upload_pic).grid(row=12, column=1,columnspan=2, pady = 5, padx = 10)
         #root.bind('<Button-1>', upload_pic)
 
         ##set text
@@ -176,6 +179,20 @@ def Display(key):
             fine=row[11]
         e9.insert(0,fine)
         e9.config(state = 'disabled') 
+
+        flag = row[11]
+        upload = row[12]
+        print(flag,upload)
+        if(flag == 0 and upload == 1):
+            e10.insert(tk.END,'Paid all the fines').config(state='disabled',foreground="green")
+
+            #note = 'Paid all the fines'
+        elif(flag == 1 and upload == 1):
+            e10.insert(tk.END,"Your previous payment is not verified.\n please process again ").config(state='disabled', foreground="red")
+        
+        elif(flag == 1 and upload == 0):
+            e10.insert(tk.END,"Pay fine on time ")
+            e10.config(state='disabled', foreground="red")
         
 if __name__ == "__main__":
     root = Tk()

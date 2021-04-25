@@ -15,7 +15,11 @@ def on_select(event):
     if(ans == 'yes'):
         flag = 0
         bk.deletePayment(sel_val['values'][1])
-
+        db = bk.getConnection()
+        cursor = db.cursor()
+        cursor.execute("UPDATE document_detail SET upload = 1 where docNumber = %s"%sel_val['values'][1])
+        db.commit()
+        cursor.close()
     else:
         flag  = 1
     # to update flag

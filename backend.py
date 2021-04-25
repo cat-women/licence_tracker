@@ -147,6 +147,9 @@ def insert_payment(data):
         val = (data[0],data[1],data[2])
         sql = "INSERT INTO payment(doc_id,voucher,bill) values (%s,%s,%s)"
         mycursor.execute(sql,val)
+        sql = 'UPDATE document_detail SET upload = 1 where docNumber = %s'%data[0]
+        mycursor.execute(sql)
+
         mydb.commit()
     except Error as e:
         print('ERROR')
