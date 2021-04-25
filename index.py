@@ -44,6 +44,12 @@ class Window(Frame):
             return
 
 
+        def show():
+            key = search_key.get()
+            if(bk.search(key)==None):
+                mb.showwarning("Warning","data not found !")
+            else:
+               display.Display(key)
             
         #menu               
         menubar = Menu(self.master,font="Arial" )
@@ -74,7 +80,7 @@ class Window(Frame):
         self.in_name = Entry(self,textvariable=search_key,font=("Arial",20), fg="Lime", justify="center")
         self.in_name.place(x =120, y=120)
         
-        btn_submit = tk.Button(self, text='submit', font="Arial",bg="#FBDAB7", command=lambda: display.Display(search_key.get()))
+        btn_submit = tk.Button(self, text='submit', font="Arial",bg="#FBDAB7", command= show)
         btn_submit.place(x = 400, y=120)
 
         #show notification 

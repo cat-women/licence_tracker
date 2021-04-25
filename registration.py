@@ -51,41 +51,42 @@ class Registration(Tk.Toplevel):
                     mb.showinfo('Information','Please enter your branch name')
                     count+=1
                     self.state()
-                    self.focus()                   
+                    self.focus()  
+                                    
 
-                if tname == '':
+                elif tname == '':
                     mb.showinfo('Information','Please enter your  name')
                     count+=1
                     self.state()
                     self.focus()
 
-                if dtype == '':
+                elif dtype == '':
                     mb.showinfo('Information','Please enter your  name')
                     count+=1
                     self.state()
                     self.focus()
                     
-                if license == '':
+                elif license == '':
                     mb.showinfo('Information','Please enter licence number ')
                     count+=1              
                     self.focus()
                     
-                if offence == '':
+                elif offence == '':
                     mb.showinfo('Information','Please enter offence')
                     count+=1
                     self.focus()
 
-                if oname == '':
+                elif oname == '':
                     mb.showinfo('Information','Please enter offence')
                     count+=1
                     self.focus()
                 
-                if fine == '':
+                elif fine == '':
                     mb.showinfo('Information','Please enter fine')
                     count+=1
                     self.focus()
 
-                if vType =='':                    
+                elif vType =='':                    
                     mb.showinfo('Information','Please enter fine')
                     count+=1
                     self.focus()

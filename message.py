@@ -48,19 +48,19 @@ class AddMessage(Tk.Toplevel):
                     self.focus()
                     
 
-                if varloc == '':
+                elif varloc == '':
                     count+=1
                     mb.showinfo('Information','Please enter location')
                     self.state()
                     self.focus()
 
-                if vardesc == '':
+                elif vardesc == '':
                     count+=1
                     mb.showinfo('Information','Please specify detail ')
                     self.state()
                     self.focus()
                     
-                if varmsg == '':
+                elif varmsg == '':
                     count+=1
                     mb.showinfo('Information','Please enter message  ')
                     self.focus()

@@ -28,7 +28,6 @@ def Display(key):
         root.resizable(0, 0)
         root.iconbitmap('logo.jpg')
         '''
-        global voucher
         data = []
         bill = []
         data.append(key)
@@ -58,11 +57,14 @@ def Display(key):
             print(bill)
 
         def add():
-            print("call submit button ")
-            print(data)
-            bk.insert_payment(data)
-            mb.showinfo('Information',"your payemnet will be verified soon !")
-            root.destroy()
+            if(len(data)==3):                
+                bk.insert_payment(data)
+                mb.showinfo('Information',"your payemnet will be verified soon !")   
+                root.destroy()             
+            else:
+                mb.showwarning("Error","must upload both file")
+                root.deiconify()
+            
 
 
 
@@ -127,7 +129,7 @@ def Display(key):
         e7.grid(row=7, column=1, pady = 5, padx = 10)
 
 
-        Label(root, text="count",font=("Arial")).grid(row=8, column=0, pady = 5, padx = 10)
+        Label(root, text="Rule violated ",font=("Arial")).grid(row=8, column=0, pady = 5, padx = 10)
         e8 = Entry(root,font=("Arial"))
         e8.grid(row=8, column=1, pady = 5, padx = 10)
 
@@ -168,12 +170,16 @@ def Display(key):
         e8.insert(0,row[9])
         e8.config(state = 'disabled') 
 
-
-        e9.insert(0,row[7])
+        if(row[11] == 0):
+            fine = 0
+        else:
+            fine=row[11]
+        e9.insert(0,fine)
         e9.config(state = 'disabled') 
         
 if __name__ == "__main__":
     root = Tk()
     root.geometry("800x600")
+    root.title("why this is coming ")
     app = Display(123)
     root.mainloop()

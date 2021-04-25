@@ -13,17 +13,19 @@ def on_select(event):
 
     ans = mb.askquestion('Confrim', 'verified ?' )    
     if(ans == 'yes'):
-        flag = FALSE
-        bk.deletePayment(sel_val['values'][0])
+        flag = 0
+        bk.deletePayment(sel_val['values'][1])
 
     else:
-        flag  = TRUE
+        flag  = 1
+    # to update flag
     bk.verified(flag,sel_val['values'][1])
 
 root = Tk()
-root.geometry("550x300+300+150")
+root.geometry("600x300+300+150")
 root.resizable(width=True, height=True)
 
+Label(root,text = "payment detail ").place(x = 30, y = 20)
 
 #form to display notice 
 style = ttk.Style()
@@ -52,14 +54,7 @@ for row in result:
 for i in result:
     print(i[2])
 
-
-'''
-canvas = Canvas(root, width = 100, height = 100)      
-canvas.pack()      
-img = ImageTk.PhotoImage(Image.open(result[10][2]))  
-canvas.create_image(10,10, anchor=NW, image=img)  
-'''
-table.place(x = 0, y = 20)
+table.place(x = 10, y = 50)
 table.bind('<<TreeviewSelect>>', on_select)
            
 

@@ -18,6 +18,8 @@ import matplotlib.animation as animation
 from matplotlib import style
 import numpy as np
 #Animation 
+
+
 def show_animation():    
     fig = plt.figure()
     line = fig.add_subplot(1,1,1)
@@ -72,9 +74,9 @@ def try_login():               # this my login function
             def donothing():
                     exit() 
 
-            def close():
-                messagebox.WARNING('Information','Cant fill empty form !')
-                exit()
+            def show_payment():
+                import showPayment
+                
                 
             def register():
                 registration.Registration(MAIN_WINDOW)
@@ -98,7 +100,7 @@ def try_login():               # this my login function
 
 
             menubar.add_command(label="Log out", command=logout)
-            menubar.add_command(label="Close", command=close)
+            menubar.add_command(label="See payment", command=show_payment)
 
 
 
@@ -185,7 +187,7 @@ def try_login():               # this my login function
             #line Graph
             info_frame = tk.Frame(master=graph,bg='green').pack(expand = True,side=RIGHT)
             Button(master=graph, text="Show Graph", command=show_animation,font=("Arial",20)).pack(expand = True)
-            Label(master=graph, text= 'Total fund raise: Rs.'+str(bk.fund()),font=("Arial",20)).pack()
+            Label(master=graph, text= 'Total Fine: Rs.'+str(bk.fund()),font=("Arial",20)).pack()
             #Button(master=graph, text="Show animation", command=show_animation).pack(expand = True)
 
 

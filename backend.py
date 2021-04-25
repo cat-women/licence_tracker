@@ -160,21 +160,26 @@ def fetch_payment():
     result = mycursor.fetchall()
     mycursor.close()  
     return result
+
 def verified(flag,key):
     mydb = getConnection()
     mycursor = mydb.cursor()
     sql = 'UPDATE document_detail SET flag = {0} where docNumber = {1}'.format(flag, key)
     mycursor.execute(sql)
+    mydb.commit()
     mycursor.close()
     print('falg updated ')
 
 def deletePayment(key):    
     mydb = getConnection()
     mycursor = mydb.cursor()
-    sql = 'DELETE from payment where doc_id = {0}'.format(key)
+    print(key)
+    sql = 'DELETE FROM  payment where doc_id = %s'%key
     mycursor.execute(sql)
+    
+    mydb.commit()
+    print('number of rows deleted', mycursor.rowcount)
     mycursor.close()
-    print('one data deleted  ')
 
 
 
@@ -194,5 +199,7 @@ if __name__ == "__main__":
     #print(fetch())
 
     #print('thois is text'+str(fund()))\\
-    insert_payment(123, "file path", "file path ")
-    
+    #insert_payment(123, "file path", "file path ")
+    #deletePayment(123)
+    #verified(0, 1234)\
+    print(search(1234))
