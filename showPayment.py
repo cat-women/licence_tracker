@@ -14,10 +14,18 @@ def on_select(event):
     ans = mb.askquestion('Confrim', 'verified ?' )    
     if(ans == 'yes'):
         flag = 0
-        bk.deletePayment(sel_val['values'][1])
         db = bk.getConnection()
         cursor = db.cursor()
-        cursor.execute("UPDATE document_detail SET upload = 1 where docNumber = %s"%sel_val['values'][1])
+        cursor.execute('SELECT fine FROM document_detail WHERE docNumber = %s'%sel_val['values'][0])
+        fine =cursor.fetchone()   
+
+        print("documetn number ",sel_val['values'][0])
+        print("documetn number ",fine[0])
+
+        bk.verifyPayment(sel_val['values'][0],fine[0])
+
+
+        #cursor.execute("UPDATE document_detail SET upload = 1 where docNumber = %s"%sel_val['values'][1])
         db.commit()
         cursor.close()
     else:

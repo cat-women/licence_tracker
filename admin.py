@@ -10,6 +10,7 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
+
 # Implement the default Matplotlib key bindings.
 from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
@@ -78,6 +79,7 @@ def try_login():               # this my login function
                 import showPayment
                 
                 
+                
             def register():
                 registration.Registration(MAIN_WINDOW)
 
@@ -112,8 +114,7 @@ def try_login():               # this my login function
                 messagebox.INFO('Information','click click !')
           
             title = Label(frame, text="LICENSE TRACKER",font=("Algerian",30),bg='#f5e5bf', fg="#f763e1")
-            title.pack(expand=True,fill=BOTH)
-            
+            title.pack(expand=True,fill=BOTH)          
 
 
 
@@ -181,12 +182,9 @@ def try_login():               # this my login function
             #label(barchart,text='test').pack(side=BOTTOM)
 
 
-
-
-
             #line Graph
             info_frame = tk.Frame(master=graph,bg='green').pack(expand = True,side=RIGHT)
-            Button(master=graph, text="Show Graph", command=show_animation,font=("Arial",20)).pack(expand = True)
+            #Button(master=graph, text="Show Graph", command=show_animation,font=("Arial",20)).pack(expand = True)
             Label(master=graph, text= 'Total Fine: Rs.'+str(bk.fund()),font=("Arial",20)).pack()
             #Button(master=graph, text="Show animation", command=show_animation).pack(expand = True)
 

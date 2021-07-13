@@ -1,10 +1,10 @@
 from tkinter import *
 from tkinter import ttk as ttk
-
 from PIL import Image,ImageTk
 from tkcalendar import Calendar, DateEntry 
 import tkinter.messagebox as mb 
 import tkinter as tk 
+import webbrowser
 import registration
 import backend as bk
 import display
@@ -31,8 +31,14 @@ class Window(Frame):
 
 
         #menu function 
+        def help():
+            webbrowser.open_new('http://localhost/licenseTracker_with_laravel/public/help')
+       
+        def about():
+            webbrowser.open_new('http://localhost/licenseTracker_with_laravel/public/about')
+        
         def donothing():
-            exit() 
+            exit()
 
         def close():
             exit()
@@ -66,8 +72,8 @@ class Window(Frame):
 
         #help
         helpmenu = Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Help Index", command=donothing)
-        helpmenu.add_command(label="About...", command=donothing)
+        helpmenu.add_command(label="Help Index", command=help)
+        helpmenu.add_command(label="About...", command=about)
         menubar.add_cascade(label="Help", menu=helpmenu)        
         
         #LOGO 
@@ -97,7 +103,7 @@ class Window(Frame):
         result = bk.fetchMsg()
         for row in result:
             self.tree.insert('', 'end', values=row)
-            print(row)
+            #print(row)
 
         self.tree.bind('<<TreeviewSelect>>', self.on_select)
         
@@ -113,11 +119,7 @@ y = (screen_height/2) - (height/2)
 root.geometry("%dx%d+%d+%d" % (width, height, x, y))
 root.resizable(0, 0)
 root.iconbitmap('logo.jpg')
-
-
-
 app = Window(root)
-
 root.mainloop()
 
 #change font size and color of doc detail 

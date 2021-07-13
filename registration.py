@@ -94,6 +94,7 @@ class Registration(Tk.Toplevel):
 
             if(count == 0):
                 #db(self)
+                #print(branch,tname,dtype,license,oname,offence,fine,date,total,vType)
                 bk.insert(branch,tname,dtype,license,oname,offence,fine,date,total,vType)
                 mb.showinfo('Information','new data added succesfully ')
                 self.destroy()

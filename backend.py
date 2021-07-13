@@ -15,7 +15,6 @@ def getConnection():
             print('db closed')  
             return mydb
 
-
 def create():    
     mydb = getConnection()
     #mycursor.execute("CREATE DATABASE db_license")
@@ -27,17 +26,25 @@ def insert(branch, tname,docType, documentNumber,owner,offence,fine,date,count,v
     mydb = getConnection()
     try:        
         mycursor = mydb.cursor()
-        sql = 'SELECT count FROM document_detail WHERE docNumber = %s '%documentNumber
+        sql = 'SELECT count,flag,fine FROM document_detail WHERE docNumber = %s '%documentNumber
         mycursor.execute(sql)
-        result = mycursor.fetchone()
-               
-
+        result = mycursor.fetchone()              
+        print(result)
         if result is not None:
             count = result[0]
+            flag = result[1]
+            if flag == 1:
+                fine = result[2]+int(fine)
             count +=1
-            sql = 'UPDATE document_detail SET count = {0} where docNumber = {1}'.format(count, documentNumber)
-            mycursor.execute(sql)
+            flag=1
+            print(branch,offence,fine,date,count,flag)
+            
+            val = (branch,tname,offence,fine,date,count,flag,documentNumber)
+
+            sql = 'UPDATE document_detail SET  branch=%s ,trafficName=%s, offence= %s,fine= %s,date=%s,count=%s,flag=%s where docNumber =%s'
+            mycursor.execute(sql,val)
             mydb.commit()
+            
             print("Data updated ")
             
         else:
@@ -74,21 +81,21 @@ def search(documentNumber):
 
 
 def delete(id):
-    mydb = connect()
+    mydb = getConnection()
     mycursor = mydb.cursor()  
     sql = 'DELETE FROM document_detail WHERE id = %d '%id    
     mycursor.execute(sql)
     mycursor.close()
 
-def update(Id,branch, name,documentNumber,offence,fine,date):
-    mydb = connect()
+def update(id,branch, name,documentNumber,offence,fine,date):
+    mydb = getConnection()
     mycursor = mydb.cursor()
-    sql = 'INSERT INTO document_detail( branch, name,documentNumber,offence,fine,date) values (%s,%s,%s,%s,%d,%s) WHERE id=%d'%(branch, name,documentNumber,offence,fine,date,id)
+    sql = 'UPDATE document_detail SET branch, name,documentNumber,offence,fine,date) values (%s,%s,%s,%s,%d,%s) WHERE id=%s'%(branch, name,documentNumber,offence,fine,date,id)
     mycursor.execute(sql)
     mycursor.close()
 
 
-
+#insert message 
 def insertMsg(title,msg,desc,loc,date):    
     mydb = getConnection()
     try:        
@@ -104,6 +111,7 @@ def insertMsg(title,msg,desc,loc,date):
     finally:
         mydb.close()
 
+#retrive all message
 def fetchMsg():
     mydb = getConnection()
     mycursor = mydb.cursor()    
@@ -112,6 +120,7 @@ def fetchMsg():
     mycursor.close()
     return result
 
+#collecting data for bar 
 def bar():
     mydb = getConnection()
     mycursor = mydb.cursor()    
@@ -120,6 +129,7 @@ def bar():
     mycursor.close()
     return count
 
+#collecting data for line 
 def line():
     mydb = getConnection()   
     mycursor = mydb.cursor()  
@@ -128,16 +138,15 @@ def line():
     mycursor.close()
     return result
 
+#Calculate total fine colledted 
 def fund():
     mydb = getConnection()   
-    mycursor = mydb.cursor() 
- 
-    mycursor.execute("SELECT sum(fine) FROM document_detail")
+    mycursor = mydb.cursor()  
+    mycursor.execute("SELECT sum(totalFine) FROM payment")
     result = mycursor.fetchall()
     mycursor.close()    
     for x in result:
-        text = x[0]
-        
+        text = x[0]        
     return text
 
 def insert_payment(data):
@@ -156,14 +165,16 @@ def insert_payment(data):
         print(e)
     finally:
         mydb.close()
+
 def fetch_payment():    
     mydb = getConnection()   
     mycursor = mydb.cursor()  
-    mycursor.execute("SELECT * FROM payment")
+    mycursor.execute("SELECT * FROM payment where isVarified = 0")
     result = mycursor.fetchall()
     mycursor.close()  
     return result
 
+#Update document detail once payment is verified 
 def verified(flag,key):
     mydb = getConnection()
     mycursor = mydb.cursor()
@@ -171,15 +182,23 @@ def verified(flag,key):
     mycursor.execute(sql)
     mydb.commit()
     mycursor.close()
-    print('falg updated ')
+    print('flag updated ')
 
-def deletePayment(key):    
+def verifyPayment(key,fine):    
     mydb = getConnection()
     mycursor = mydb.cursor()
     print(key)
-    sql = 'DELETE FROM  payment where doc_id = %s'%key
-    mycursor.execute(sql)
-    
+    mycursor.execute('select totalFine from payment where doc_id = %s'%key)
+    totalfine = mycursor.fetchone()   
+    #if(totalfine[0] == None):
+    #    totalfine[0] = 0;  
+    print(fine)
+    print(totalfine[0])
+
+    totalfine = fine+totalfine[0];      
+ 
+    sql = 'update payment set isVarified = 1,totalFine =%s where doc_id = %s'%(totalfine,key)
+    mycursor.execute(sql)    
     mydb.commit()
     print('number of rows deleted', mycursor.rowcount)
     mycursor.close()
