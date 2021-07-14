@@ -3,8 +3,11 @@ from tkinter import ttk as ttk
 from tkinter import messagebox 
 import backend as bk 
 import registration
+import addAdmin as min
+
 import message as ms
 import tkinter as tk 
+
 
 #For Graph 
 import matplotlib.pyplot as plt
@@ -18,6 +21,8 @@ from matplotlib.figure import Figure
 import matplotlib.animation as animation
 from matplotlib import style
 import numpy as np
+import showPayment as sp
+
 #Animation 
 
 
@@ -76,8 +81,7 @@ def try_login():               # this my login function
                     exit() 
 
             def show_payment():
-                import showPayment
-                
+                sp.show()              
                 
                 
             def register():
@@ -104,9 +108,11 @@ def try_login():               # this my login function
             menubar.add_command(label="Log out", command=logout)
             menubar.add_command(label="See payment", command=show_payment)
 
+            menubar.add_cascade(label="Add user",command=lambda: min.AddAdmin(MAIN_WINDOW) )      
 
 
             #Body panel 
+            
             global selected
             selected = []
             def on_select(self):
@@ -132,7 +138,7 @@ def try_login():               # this my login function
             style.map('Treeview',
                 background=[('selected','blue')]
             )
-            lb_header = ['Branch','Doc Type','DocNo.','offence','Fine','Date','Total','flag']
+            lb_header = ['Branch','Document Type','Document No.','offence','Fine','Date','Count']
 
             #create trreeview 
             table = ttk.Treeview(frame, columns=lb_header, show="headings", wrap=None)

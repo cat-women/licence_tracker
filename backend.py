@@ -189,30 +189,19 @@ def verifyPayment(key,fine):
     mycursor = mydb.cursor()
     print(key)
     mycursor.execute('select totalFine from payment where doc_id = %s'%key)
-    totalfine = mycursor.fetchone()   
-    #if(totalfine[0] == None):
-    #    totalfine[0] = 0;  
-    print(fine)
-    print(totalfine[0])
-
-    totalfine = fine+totalfine[0];      
- 
-    sql = 'update payment set isVarified = 1,totalFine =%s where doc_id = %s'%(totalfine,key)
-    mycursor.execute(sql)    
-    mydb.commit()
-    print('number of rows deleted', mycursor.rowcount)
+    totalfine = mycursor.fetchone() 
     mycursor.close()
 
 
+    totalfine = fine+totalfine[0];    
+    sql = 'update payment set isVarified = 1,totalFine =%s where doc_id = %s'%(totalfine,key)
+    db = getConnection()
+    cursor = db.cursor()
+    cursor.execute(sql)    
+    print('number of rows deleted', mycursor.rowcount)
+    cursor.close()
 
 
-
-
-
-'''
-add bill no 
-add count variable in dba 
-'''
 
 if __name__ == "__main__":
     #getConnection()
